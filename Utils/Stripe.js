@@ -7,7 +7,7 @@ try{
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        success_url: `${process.env.SERVER_URL}/success`,
+        success_url: `${process.env.BASE_URL}/dashboard`,
         cancel_url: `${process.env.SERVER_URL}/cancel`,
         line_items: [{
             price_data: {
@@ -17,7 +17,7 @@ try{
             }, quantity: 1,
         }]
     })
-    res.redirect(session.url)
+    res.send({url: session.url})
 }
 catch(err){
     console.log(err)
