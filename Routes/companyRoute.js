@@ -6,6 +6,6 @@ const {auth} = require('../Middleware/userMiddleware')
 const {getCalculations} = require('../Middleware/company')
 
 
-router.post('/analize', auth, getCalculations, updateDB)
+router.post('/submit', auth, updateDB)
 
 module.exports = router;

@@ -3,7 +3,8 @@ const router = express.Router();
 const passport = require('passport')
 const {authWithGoogle}=require('../Controllers/userController')
 const {subscribe} = require('../Utils/Stripe')
-
+const {auth}= require('../Middleware/userMiddleware')
+const {validateUser}=require('../Controllers/userController')
 
 router.get('/', (req, res) => {
     res.send('Hello11 World');
@@ -32,5 +33,7 @@ router.get('/logout', (req, res)=>{
     })
 
 router.get('/subscribe', subscribe)
+
+router.get('/validate', auth, validateUser)
 
 module.exports = router;
