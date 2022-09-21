@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const companyData = require('../Schemas/companySchema')
 
 
-router.get('/', (req, res) => {
+router.post('/analizeCompany', 
+(req, res) => {
     res.send('Hello World');
-})
+}
+)
 
 module.exports = router;
