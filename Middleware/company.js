@@ -1,37 +1,37 @@
 exports.getCalculations = async (req, res, next) => {
   const {
     netsales,
-    netsalesprev,//add
+    netsalesprev, //add
     cogs,
-    cogsprev,//add
+    cogsprev, //add
     sga,
-    sgaprev,//add
+    sgaprev, //add
     depreciation,
-    depreciationprev,//add
+    depreciationprev, //add
     intexp,
-    intexpprev,//add
+    intexpprev, //add
     taxexp,
-    taxexpprev,//add
+    taxexpprev, //add
     rnd,
     fixedassets,
-    fixedassetsprev,//add
+    fixedassetsprev, //add
     debt,
     equity,
     inventories,
-    inventoriesprev,//add
+    inventoriesprev, //add
     receivables,
     receivablesprev,
     cashnow,
     otherliquid,
-    otherliquidprev,//add
+    otherliquidprev, //add
     payable,
-    payableprev,//add
+    payableprev, //add
     overdraft,
-    overdraftprev,//add
+    overdraftprev, //add
     intpayable,
-    intpayableprev,//add
+    intpayableprev, //add
     otherpayable,
-    otherpayableprev,//add
+    otherpayableprev, //add
     cashprev,
     divsnow,
   } = req.body;
@@ -48,32 +48,47 @@ exports.getCalculations = async (req, res, next) => {
           intexpprev -
           taxexpprev) -
       1,
-    grossProfitSalesRatio:
-    (netsales-cogs)/(netsales),
+    grossProfitSalesRatio: (netsales - cogs) / netsales,
 
     cashReinvestmentRatio:
-    ((fixedassets-fixedassetsprev)+(inventories+receivables+cashnow+otherliquid-inventoriesprev-receivablesprev-cashprev-otherliquidprev)-(payable+overdraft+intpayable+otherpayable-payableprev-overdraftprev-intpayableprev-otherpayableprev))/
-    (cashnow-cashprev),
+      (fixedassets -
+        fixedassetsprev +
+        (inventories +
+          receivables +
+          cashnow +
+          otherliquid -
+          inventoriesprev -
+          receivablesprev -
+          cashprev -
+          otherliquidprev) -
+        (payable +
+          overdraft +
+          intpayable +
+          otherpayable -
+          payableprev -
+          overdraftprev -
+          intpayableprev -
+          otherpayableprev)) /
+      (cashnow - cashprev),
 
-    rndExpenseRatio:
-    rnd/netsales,
+    rndExpenseRatio: rnd / netsales,
 
-    intCovRatio:
-    (netsales-depreciation-cogs-sga)/(intexp),
+    intCovRatio: (netsales - depreciation - cogs - sga) / intexp,
 
     retainedEarningsTotalAssetsRatio:
-    (netsales-cogs-sga-depreciation-taxexp-intexp-divsnow)/
-    (inventories+receivables+cashnow+otherliquid+fixedassets),
+      (netsales - cogs - sga - depreciation - taxexp - intexp - divsnow) /
+      (inventories + receivables + cashnow + otherliquid + fixedassets),
 
     currentRatio:
-    (receivables+cashnow+otherliquid+inventories)/(payable+overdraft+otherpayable+intpayable),
+      (receivables + cashnow + otherliquid + inventories) /
+      (payable + overdraft + otherpayable + intpayable),
 
     quickRatio:
-    (receivables+cashnow+otherliquid)/(payable+overdraft+otherpayable+intpayable),
+      (receivables + cashnow + otherliquid) /
+      (payable + overdraft + otherpayable + intpayable),
 
-    cashFlowNetSalesRatio:
-    (cashnow-cashprev)/(netsales)
-    };
-    req.body.kpi = kpis
-   next()
+    cashFlowNetSalesRatio: (cashnow - cashprev) / netsales,
+  };
+  req.body.kpi = kpis;
+  next();
 };
