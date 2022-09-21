@@ -1,6 +1,7 @@
 const {companyRecord,kpiRecord} = require("../Schemas/companySchema");
 exports.updateDB = async (req, res) => {
   const newEntry = req.body;
+ 
   try {
     const newAnnualRecord = await companyRecord(newEntry);
     await newAnnualRecord.save();
