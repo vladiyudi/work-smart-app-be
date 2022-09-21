@@ -1,27 +1,33 @@
 const mongoose = require('mongoose');
 
 const companySchema = new mongoose.Schema({
-    user: String,
-    year: Number,
-    netsales: Number,
-    cogs:Number,
-    sga:Number,
-    depreciation:Number,
-    intexp:Number,
-    taxexp:Number,
-    rnd: Number,
-    fixedassets:Number,
-    debt: Number,
-    equity:Number,
-    inventories: Number,
-    receivables: Number,
-    cashnow:Number,
-    otherliquid: Number,
-    payable: Number,
-    overdraft: Number,
-    intpayable: Number,
-    otherpayable: Number,
-    divsnow:Number,
-})
+    user: {type:String,unique:true},
+    year:{type:String,unique:true},
+    netsales: {type:Number},
+    cogs:{type:Number},
+    sga:{type:Number},
+    depreciation:{type:Number},
+    intexp:{type:Number},
+    taxexp:{type:Number},
+    rnd:{type: Number},
+    fixedassets:{type:Number},
+    debt: {type:Number},
+    equity:{type:Number},
+    inventories: {type:Number},
+    receivables: {type:Number},
+    cashnow:{type:Number},
+    otherliquid:{type:Number},
+    payable: {type:Number},
+    overdraft: {type:Number},
+    intpayable:{type: Number},
+    otherpayable: {type:Number},
+    divsnow:{type:Number}
+},
+{
+    timestamps:true
+   }
+   )
 
-module.exports = mongoose.model('Company', companySchema)
+const companyRecord=mongoose.model('companyRecord',companySchema)
+
+module.exports = companyRecord
