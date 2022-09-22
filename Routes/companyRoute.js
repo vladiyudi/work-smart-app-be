@@ -5,7 +5,7 @@ const {updateDB, calculateKPI, getDataScience} = require('../Controllers/company
 const {auth} = require('../Middleware/userMiddleware')
 const {getCalculations} = require('../Middleware/company')
 router.post('/submit', auth, updateDB)
-router.post('/kpi', calculateKPI)
+router.get('/kpi', calculateKPI)
 
 
 
