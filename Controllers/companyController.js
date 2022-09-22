@@ -1,16 +1,15 @@
-const {companySchema,kpiRecord} = require("../Schemas/companySchema");
+const { companySchema, kpiRecord } = require("../Schemas/companySchema");
 exports.updateDB = async (req, res) => {
   const newEntry = req.body;
   console.log(newEntry);
- 
-  try {
 
+  try {
     const newAnnualRecord = new companySchema(newEntry);
-    console.log(newAnnualRecord)
+    console.log(newAnnualRecord);
     await newAnnualRecord.save();
-    console.log("hi")
-    await res.send(newAnnualRecord)
-      // .message(`the new fin record for ${newEntry.year} has been saved`);
+    console.log("hi");
+    await res.send(newAnnualRecord);
+    // .message(`the new fin record for ${newEntry.year} has been saved`);
   } catch (error) {
     // res.status(500).send(error);
   }
@@ -23,8 +22,8 @@ exports.calculateKPI = async (res) => {
       .sort({ year: -1 })
       .limit(1);
     console.log(mostRecentRecord);
-    const user=mostRecentRecord.user
-    const year=mostRecentRecord.year
+    const user = mostRecentRecord.user;
+    const year = mostRecentRecord.year;
     const netsales1 = mostRecentRecord.netsales;
     const cogs1 = mostRecentRecord.cogs;
     const sga1 = mostRecentRecord.sga;
@@ -48,6 +47,16 @@ exports.calculateKPI = async (res) => {
       .find()
       .sort({ year: -2 })
       .limit(1);
+
+    if (!previousRecord) {
+      res.send({
+        norecords: true,
+        message:
+          "Please input a record for the previous year in order to calculate KPIS",
+      });
+      return;
+    }
+
     const netsales2 = previousRecord.netsales;
     const cogs2 = previousRecord.cogs;
     const sga2 = mostRecentRecord.sga;
@@ -67,9 +76,9 @@ exports.calculateKPI = async (res) => {
     const intpayable2 = previousRecord.intpayable;
     const otherpayable2 = previousRecord.otherpayable;
     const divsnow2 = previousRecord.divsnow;
-    newKpiEntry = { 
-      user:user,
-      year:year,
+    newKpiEntry = {
+      user: user,
+      year: year,
       operatingMargin: (netsales1 - (cogs1 + sga1 + depreciation1)) / netsales1,
       grossMarginGrowthRate: (netsales1 - cogs1) / (netsales2 - cogs2) - 1,
       netProfitGrowthRate:
@@ -123,10 +132,12 @@ exports.calculateKPI = async (res) => {
 
       cashFlowNetSalesRatio: (cashnow1 - cashnow2) / netsales1,
     };
-  const kpi=await kpiRecord(newKpiEntry)
-  await kpi.save()
-  res.send(kpi[0])
-
-  } catch (erroe) {
-  res.status(500).send("can't send the company's kpis")  }
+    const kpi = await kpiRecord(newKpiEntry);
+    await kpi.save();
+    res.send(kpi[0]);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ ok: false, message: "There was an error calculating the KPIs" });
+  }
 };
