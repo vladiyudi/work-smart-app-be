@@ -20,10 +20,17 @@ exports.calculateKPI = async (req, res, next) => {
   try {
     const mostRecentRecord = await companySchema
       .find({year: 2022})
+<<<<<<< HEAD
       // .sort({ year: -1 })
       .limit(1);
     console.log(mostRecentRecord);
     const user = mostRecentRecord[0].user;
+=======
+    //   .sort({ year: -1 })
+      .limit(1);
+    console.log(mostRecentRecord);
+    // const user = mostRecentRecord[0].user;
+>>>>>>> 5554ae2 (changes)
     const year = mostRecentRecord[0].year;
     const netsales1 = mostRecentRecord[0].netsales;
     const cogs1 = mostRecentRecord[0].cogs;
@@ -63,7 +70,11 @@ console.log("perv", previousRecord);
 
     const netsales2 = previousRecord[0].netsales;
     const cogs2 = previousRecord[0].cogs;
+<<<<<<< HEAD
     const sga2 = previousRecord[0].sga;
+=======
+    const sga2 = mostRecentRecord[0].sga;
+>>>>>>> 5554ae2 (changes)
     const depreciation2 = previousRecord[0].depreciation;
     const intexp2 = previousRecord[0].intexp;
     const taxexp2 = previousRecord[0].taxexp;
