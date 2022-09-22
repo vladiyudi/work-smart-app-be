@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const companySchema = new mongoose.Schema({
-    user: {type:String,unique:true},
-    year:{type:String,unique:true},
+const companyFinancials = new mongoose.Schema({
+    userid: {type:String},
+    year:{type:Number},
     netsales: {type:Number},
     cogs:{type:Number},
     sga:{type:Number},
@@ -28,8 +28,8 @@ const companySchema = new mongoose.Schema({
    })
 
    const kpiSchema = new mongoose.Schema({
-    user: {type:String,unique:true},
-    year:{type:String,unique:true},
+    user: {type:String,unique:false},
+    year:{type:String,unique:false},
     operatingMargin: {type:Number,default:0},
     grossMarginGrowthRate:{type:Number,default:0},
     snetProfitGrowthRatega:{type:Number,default:0},
@@ -47,7 +47,7 @@ const companySchema = new mongoose.Schema({
    })
 
 
-const companyRecord=mongoose.model('companyRecord',companySchema)
+const companySchema=mongoose.model('companyRecord',companyFinancials)
 const kpiRecord=mongoose.model('kpiRecord',kpiSchema)
 
-module.exports = {companyRecord,kpiRecord}
+module.exports = {companySchema,kpiRecord}

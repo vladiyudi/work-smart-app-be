@@ -12,8 +12,5 @@ exports.auth = (req, res, next) => {
       next();
     }
     );
-    // req.body.userid = "60a1b1b0b1b1b1b1b1b1b1b1"
- 
-
-    
+    // req.body.userid = "60a1b1b0b1b1b1b1b1b1b1b1"   
   }

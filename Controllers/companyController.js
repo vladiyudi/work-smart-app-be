@@ -1,21 +1,24 @@
-const {companyRecord,kpiRecord} = require("../Schemas/companySchema");
+const {companySchema,kpiRecord} = require("../Schemas/companySchema");
 exports.updateDB = async (req, res) => {
   const newEntry = req.body;
+  console.log(newEntry);
  
   try {
-    const newAnnualRecord = await companyRecord(newEntry);
+
+    const newAnnualRecord = new companySchema(newEntry);
+    console.log(newAnnualRecord)
     await newAnnualRecord.save();
-    res
-      .send(newAnnualRecord)
-      .message(`the new fin record for ${newEntry.year} has been saved`);
+    console.log("hi")
+    await res.send(newAnnualRecord)
+      // .message(`the new fin record for ${newEntry.year} has been saved`);
   } catch (error) {
-    res.status(500).send(error);
+    // res.status(500).send(error);
   }
 };
 
 exports.calculateKPI = async (res) => {
   try {
-    const mostRecentRecord = await companyRecord
+    const mostRecentRecord = await companySchema
       .find()
       .sort({ year: -1 })
       .limit(1);
@@ -41,7 +44,7 @@ exports.calculateKPI = async (res) => {
     const intpayable1 = mostRecentRecord.intpayable;
     const otherpayable1 = mostRecentRecord.otherpayable;
     const divsnow1 = mostRecentRecord.divsnow;
-    const previousRecord = await companyRecord
+    const previousRecord = await companySchema
       .find()
       .sort({ year: -2 })
       .limit(1);
