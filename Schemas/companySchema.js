@@ -28,8 +28,8 @@ const companyFinancials = new mongoose.Schema({
    })
 
    const kpiSchema = new mongoose.Schema({
-    user: {type:String,unique:false},
-    year:{type:String,unique:false},
+    userid: {type:String,unique:true},
+    year:{type:String,unique:true},
     operatingMargin: {type:Number,default:0},
     grossMarginGrowthRate:{type:Number,default:0},
     snetProfitGrowthRatega:{type:Number,default:0},
