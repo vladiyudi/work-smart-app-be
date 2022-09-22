@@ -1,4 +1,7 @@
 const { companySchema, kpiRecord } = require("../Schemas/companySchema");
+const axios = require('axios')
+
+
 exports.updateDB = async (req, res) => {
   const newEntry = req.body;
   console.log(newEntry);
@@ -15,10 +18,10 @@ exports.updateDB = async (req, res) => {
   }
 };
 
-exports.calculateKPI = async (res) => {
+exports.calculateKPI = async (req, res, next) => {
   try {
     const mostRecentRecord = await companySchema
-      .find()
+      .find({year: 2022})
       .sort({ year: -1 })
       .limit(1);
     console.log(mostRecentRecord);
@@ -43,10 +46,14 @@ exports.calculateKPI = async (res) => {
     const intpayable1 = mostRecentRecord.intpayable;
     const otherpayable1 = mostRecentRecord.otherpayable;
     const divsnow1 = mostRecentRecord.divsnow;
+
     const previousRecord = await companySchema
-      .find()
-      .sort({ year: -2 })
+      .find({year: 2016})
+    //   .sort({ year: -2 })
       .limit(1);
+
+console.log("perv", previousRecord);
+
 
     if (!previousRecord) {
       res.send({
@@ -132,12 +139,41 @@ exports.calculateKPI = async (res) => {
 
       cashFlowNetSalesRatio: (cashnow1 - cashnow2) / netsales1,
     };
-    const kpi = await kpiRecord(newKpiEntry);
-    await kpi.save();
-    res.send(kpi[0]);
+
+console.log("newKpiEntry", newKpiEntry);
+
+req.kpi = newKpiEntry;
+next();
+
+    // const kpi = await kpiRecord(newKpiEntry);
+    // await kpi.save();
+    // res.send(kpi[0]);
   } catch (error) {
     res
       .status(500)
       .send({ ok: false, message: "There was an error calculating the KPIs" });
   }
 };
+
+
+
+exports.getDataScience = async (req, res) => {
+    const {kpi} = req;
+
+console.log("kpi", kpi);
+
+
+const testData = {" Operating Gross Margin":0.5972700673," Realized Sales Gross Profit Growth Rate":0.0220745598," Regular Net Profit Growth Rate":0.6897305265," Gross Profit to Sales":0.5972658371," Cash Reinvestment %":0.3728717261," Research and development expense rate":1970000000.0," Interest Coverage Ratio (Interest expense to EBIT)":0.5658006002," Equity to Liability":0.0231989712," Retained Earnings to Total Assets":0.9441406142," Current Ratio":0.0080948265," Average Collection Days":0.0071233087," Quick Ratio":0.0058416418," Cash Flow to Sales":0.6715755129}
+
+
+    try{
+        const result = await axios.post('http://52.29.103.127:8080/predict_bankrupt', testData)
+  
+     res.send(result.data)
+
+    } catch(err){
+        console.log(err)
+    }
+
+
+}

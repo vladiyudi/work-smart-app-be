@@ -33,17 +33,17 @@ app.use("/api/user", userRoute);
 app.use('/api/company', companyRoute)
 app.use('/api/user', userRoute)
 
-const fetchDS = async ()=>{
-    try{
-        const res = await axios.post('http://52.29.103.127:8080/predict_bankrupt', {" Operating Gross Margin":0.5972700673," Realized Sales Gross Profit Growth Rate":0.0220745598," Regular Net Profit Growth Rate":0.6897305265," Gross Profit to Sales":0.5972658371," Cash Reinvestment %":0.3728717261," Research and development expense rate":1970000000.0," Interest Coverage Ratio (Interest expense to EBIT)":0.5658006002," Equity to Liability":0.0231989712," Retained Earnings to Total Assets":0.9441406142," Current Ratio":0.0080948265," Average Collection Days":0.0071233087," Quick Ratio":0.0058416418," Cash Flow to Sales":0.6715755129})
-    console.log("data", res.data)
-    } catch(err){
-        console.log(err)
-    }
+// const fetchDS = async ()=>{
+//     try{
+//         const res = await axios.post('http://52.29.103.127:8080/predict_bankrupt', {" Operating Gross Margin":0.5972700673," Realized Sales Gross Profit Growth Rate":0.0220745598," Regular Net Profit Growth Rate":0.6897305265," Gross Profit to Sales":0.5972658371," Cash Reinvestment %":0.3728717261," Research and development expense rate":1970000000.0," Interest Coverage Ratio (Interest expense to EBIT)":0.5658006002," Equity to Liability":0.0231989712," Retained Earnings to Total Assets":0.9441406142," Current Ratio":0.0080948265," Average Collection Days":0.0071233087," Quick Ratio":0.0058416418," Cash Flow to Sales":0.6715755129})
+//     console.log("data", res.data)
+//     } catch(err){
+//         console.log(err)
+//     }
     
-}
+// }
 
-fetchDS()
+// fetchDS()
 
 
 app.listen(process.env.PORT, () => {
