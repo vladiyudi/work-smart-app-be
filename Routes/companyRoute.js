@@ -9,5 +9,7 @@ router.get('/kpi', calculateKPI)
 
 
 
-router.get('/result', calculateKPI, getDataScience)
+router.get('/result', 
+// calculateKPI, 
+getDataScience)
 module.exports = router;
